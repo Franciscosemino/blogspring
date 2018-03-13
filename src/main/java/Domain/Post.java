@@ -1,9 +1,13 @@
 package Domain;
 
+import org.hibernate.annotations.Cascade;
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -22,6 +26,7 @@ public class Post implements Serializable {
     @Column(name = "text",nullable = false)
     String text;
 
+    @Transient
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @Temporal(TemporalType.DATE)
@@ -80,7 +85,6 @@ public class Post implements Serializable {
     }
 
     public Date getDate() {
-
         return date;
     }
 
@@ -107,7 +111,7 @@ public class Post implements Serializable {
         return id;
     }
 
-    public ArrayList<String> getTaglist() {
+    public List<String> getTaglist() {
 
         return taglist;
     }

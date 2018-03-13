@@ -7,10 +7,7 @@ import Domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
+import java.util.*;
 
 @Service
 public class PostService {
@@ -21,6 +18,11 @@ public class PostService {
     
 
     public PostService() {}
+
+    public Post findById(Long pid){
+        post = postdao.findByIdPost(pid);
+        return post;
+    }
 
     public Boolean newPost(String title, String text, ArrayList<String> taglist, User user, Group group) {
         try {
@@ -33,10 +35,10 @@ public class PostService {
         }
     }
     public Boolean removePost(String titletoremove){
-        boolean remove = postdao.getPostList().removeIf(Post -> post.getTitle().equals(titletoremove));
-        if (remove) {
+        try{
+            postdao.deletePostByTitle(titletoremove);
             return true;
-        } else {
+        }catch (Exception e){
             return false;
         }
     }
@@ -44,7 +46,7 @@ public class PostService {
     public ArrayList<Post> searchByTag(String tag) {
         ArrayList<Post> poststoreturn = new ArrayList<Post>();
         for (Post post : postdao.getPostList()) {
-            ArrayList<String> taglist = post.taglist;
+            List<String> taglist = post.taglist;
             for (String tagfromlist : taglist){
                 if (tag.equals(tagfromlist)){
                     poststoreturn.add(post);

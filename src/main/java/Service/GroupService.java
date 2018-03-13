@@ -31,6 +31,10 @@ public class GroupService {
 
     }
 
+    public Group findById(Long gid){
+        group = groupdao.findByIdGroup(gid);
+        return group;
+    }
     public Boolean suscribeGroup(String groupname, User user){
         try{
             Group g = groupdao.findByName(groupname);
